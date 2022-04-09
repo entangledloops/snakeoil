@@ -1,0 +1,88 @@
+#:kivy 2.1.0
+
+<IntroScreen>:
+    name: 'intro'
+    GridLayout:
+        rows: 3
+        Label:
+            id: instructions
+            text: "You will be presented with a series of audio sample pairs, and you can choose whether you prefer sample A, B, Neither, or Skip. The test is untimed and you may listen as many times as you like."
+            text_size: (self.width / 2, self.height / 2)
+            halign: 'center'
+            valign: 'center'
+        ProgressBar:
+            id: load_pb
+            value: 0
+            max: 100
+        Button:
+            id: start_btn
+            text: "Preparing audio..."
+            disabled: True
+            on_press: root.manager.current = 'test'
+
+<TestScreen>:
+    name: 'test'
+    GridLayout:
+        rows: 3
+        GridLayout:
+            cols: 3
+            Button:
+                text: "< Previous"
+                on_press: app.prev()
+            GridLayout:
+                rows: 2
+                ProgressBar:
+                    id: test_pb
+                    value: 0
+                    max: 100
+                Label:
+                    id: test_lbl
+                    text: ""
+            Button:
+                text: "Next >"
+                on_press: app.next()
+        GridLayout:
+            cols: 2
+            Button:
+                text: "Play sample A"
+                on_press: app.play("A")
+            Button:
+                text: "Play sample B"
+                on_press: app.play("B")
+        GridLayout:
+            cols: 3
+            Button:
+                text: "Prefer A"
+                on_press: app.prefer("A")
+            Button:
+                text: "Prefer B"
+                on_press: app.prefer("B")
+            Button:
+                text: "Prefer Neither"
+                on_press: app.prefer("Neither")
+
+<ResultsScreen>:
+    name: 'results'
+    BoxLayout:
+        orientation: 'vertical'
+        ScrollView:
+            Label:
+                id: results_lbl
+                markup: True
+                text: ""
+                halign: 'left'
+                valign: 'center'
+        BoxLayout:
+            size_hint: 1, 0.2
+            # Button:
+            #     text: "< Back"
+            #     on_press: root.manager.current = 'test'
+            Button:
+                id: publish_btn
+                text: "Publish Results"
+                on_press: app.publish()
+            Button:
+                id: restart_btn
+                text: "New Test"
+                pos_hint: {'x': 0.5}
+                on_press: app.restart()
