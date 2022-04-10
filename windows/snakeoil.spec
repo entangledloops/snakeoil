@@ -1,7 +1,7 @@
 # -*- mode: python ; coding: utf-8 -*-
 from kivy_deps import sdl2, glew
 
-ROOT_DIR = "C:\\src\\snake-oil"
+ROOT_DIR = "C:\\src\\snakeoil"
 
 block_cipher = None
 
